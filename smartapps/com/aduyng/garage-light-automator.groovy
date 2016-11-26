@@ -58,37 +58,37 @@ def initialize() {
 }
 
 def onInteriorDoorContacted(evt){
-	log.debug "on interior door opened: $evt, current mode: ${location.currentMode}"
-	if( "night" == location.currentMode.toLowerCase() ){
-        if( "" == state.mode ){
-            state.mode = "leaving"
-        }
+	log.debug "on interior door opened: $evt"
 
-        if( "open" == evt.value && "leaving" == state.mode ){
-            log.debug "leaving: interior door opened, switch ON the light"
-            theSwitch.on()
-        } else if( "closed" == evt.value && "arriving" == state.mode ){
-            log.debug "arriving: interior door close, switch OFF the light"
-            theSwitch.off()
-            state.mode = ""
-        }
-    }
+  if( "" == state.mode ){
+      state.mode = "leaving"
+  }
+
+  if( "open" == evt.value && "leaving" == state.mode ){
+      log.debug "leaving: interior door opened, switch ON the light"
+      theSwitch.on()
+  } else if( "closed" == evt.value && "arriving" == state.mode ){
+      log.debug "arriving: interior door close, switch OFF the light"
+      theSwitch.off()
+      state.mode = ""
+  }
+
 }
 
 def onGarageDoorContacted(evt){
 	log.debug "on garage door opened: $evt"
-    if( "night" == location.currentMode.toLowerCase() ){
-        if( "" == state.mode){
-            state.mode = "arriving"
-        }
 
-        if( "closed" == evt.value && "leaving" == state.mode ){
-            log.debug "leaving: garage door closed, switch OFF the light"
-            theSwitch.off()
-            state.mode = ""
-        }else if( "open" == evt.value && "arriving" == state.mode ){
-            log.debug "arriving: garage door opened, switch ON the light"
-            theSwitch.on()
-        }
-    }
+  if( "" == state.mode){
+      state.mode = "arriving"
+  }
+
+  if( "closed" == evt.value && "leaving" == state.mode ){
+      log.debug "leaving: garage door closed, switch OFF the light"
+      theSwitch.off()
+      state.mode = ""
+  }else if( "open" == evt.value && "arriving" == state.mode ){
+      log.debug "arriving: garage door opened, switch ON the light"
+      theSwitch.on()
+  }
+
 }
